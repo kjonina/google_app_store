@@ -151,6 +151,9 @@ type_colors = c('#565656', '#F58518')
 # continuous colours
 cont_colors = c('light blue', '#1B98E0')
 
+# coolours for content.marketing
+content_colors = c( '#72B7B2', '#EECA3B', '#54A24B', '#7F7F7F')
+
 ```
 
 ## Renaming colums
@@ -179,12 +182,12 @@ unique(df$type)
 ### Missing Values in Type
 There is only one observation with missing values in column 'type'. Furthermore, this observation is missing values in column 'rating' so it was decided to drop this observation from the dataset. 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-# filtering our all observations that do not have a type
+# filtering our all Apps that do not have a type
 df %>% 
   filter(type =='NaN')
 ```
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-# dropping our all observations that do not have a type
+# dropping our all Apps that do not have a type
 df <- df %>% 
   filter(!type =='NaN')
 ```
@@ -283,7 +286,7 @@ M_df$size <- as.numeric(M_df$size)
 unique(M_df$size)
 ```
 
-There are 1637 observations with 'VARIES WITH DEVICE'.
+There are 1637 Apps with 'VARIES WITH DEVICE'.
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 df %>% 
   select(size) %>% 
@@ -375,7 +378,7 @@ df %>%
                                  "Percentage:", freq)) %>%
   add_bars(showlegend = FALSE) %>%
   layout(xaxis = list(title = FALSE),
-          yaxis = list(title = "Number of Observations"),
+          yaxis = list(title = "Number of Apps"),
          title= 'What App installs is the most common?')
 ```
 
@@ -423,6 +426,38 @@ unique(df$category)
 ```
 
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+df$catedfgory <- factor(df$category,levels = c( "Art & Design",
+                                                  "Auto & Vehicles",
+                                                  "Books & Reference",
+                                                  "Business",
+                                                  "Communication",
+                                                  "Dating",
+                                                  "Education",
+                                                  "Entertainment",
+                                                  "Family",
+                                                  "Finance",
+                                                  "Food & Drink",
+                                                  "Game",
+                                                  "Health & Fitness",
+                                                  "Lifestyle",
+                                                  "Maps & Navigation",
+                                                  "Medical",
+                                                  "News & Magazines",
+                                                  "Parenting",
+                                                  "Personalization",
+                                                  "Photography",
+                                                  "Productivity",
+                                                  "Shopping",
+                                                  "Social",
+                                                  "Sports",
+                                                  "Tools",
+                                                  "Travel & Local",
+                                                  "Video_players",
+                                                  "Weather"
+                                                  ))
+
+```
 
 ## Duration
 
@@ -440,6 +475,7 @@ plot_ly(x = x, type = "histogram", name = "Histogram") %>%
   add_trace(x = fit$x, y = fit$y, type = "scatter", mode = "lines", fill = "tozeroy", yaxis = "y2", name = "Density") %>% 
   layout(yaxis2 = list(overlaying = "y", side = "right"))
 ```
+
 
 
 
@@ -478,11 +514,11 @@ df %>%
   mutate(rating_missing = fct_reorder(rating_missing, n, .desc = TRUE), freq = formattable::percent(n / sum(n), 2)) %>%
   plot_ly(x = ~rating_missing, y = ~n, color = ~rating_missing,
           hovertemplate = ~paste("Type:", rating_missing, "<br>", 
-                                 "Number of Observations:", n, "<br>", 
+                                 "Number of Apps:", n, "<br>", 
                                  "Percentage:", freq)) %>%
   add_bars(showlegend = FALSE,colors = missing_colors) %>%
   layout(xaxis = list(title = FALSE),
-          yaxis = list(title = "Number of Observations"),
+          yaxis = list(title = "Number of Apps"),
          title= 'How many rating are missing?')
 ```
 
@@ -505,11 +541,11 @@ df %>%
   plot_ly(y = ~category, x = ~n, color = ~rating_missing, 
           hovertemplate = ~paste("Type:", rating_missing, "<br>", 
                                  "Category:", category, "<br>",
-                                 "Number of Observations:", n, "<br>", 
+                                 "Number of Apps:", n, "<br>", 
                                  "Percentage:", freq)) %>%
   add_bars(showlegend = FALSE, colors = missing_colors) %>%
   layout(xaxis = list(title = FALSE),
-          yaxis = list(title = "Number of Observations"),
+          yaxis = list(title = "Number of Apps"),
          title= 'How many rating are missing?')
 ```
 
@@ -526,7 +562,7 @@ summary_rating_missing %>%
           hovertemplate = ~paste("Category:", category, "<br>",
                                 "Type:", rating_missing, "<br>", 
                                  "Percentage:", freq,"<br>", 
-                                 "Number of Observations:", no_apps)) %>%
+                                 "Number of Apps:", no_apps)) %>%
   add_bars(showlegend = FALSE, colors = c("#D62728", "#316395")) %>%
   layout(yaxis = list(title = FALSE),
           xaxis = list(title = "Percentage"),
@@ -538,7 +574,7 @@ summary_rating_missing %>%
 ### Rating Verdict
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-# filtering our all observations that do not have a rating
+# filtering our all Apps that do not have a rating
 df <- df %>% 
   filter(rating != 'NaN')
 ```
@@ -628,6 +664,41 @@ plot_ly(x = x, type = "histogram", name = "Histogram") %>%
   layout(yaxis2 = list(overlaying = "y", side = "right"))
 ```
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+paid_df$catedfgory <- factor(paid_df$category,levels = c( "Art & Design",
+                                                  "Auto & Vehicles",
+                                                  "Books & Reference",
+                                                  "Business",
+                                                  "Communication",
+                                                  "Dating",
+                                                  "Education",
+                                                  "Entertainment",
+                                                  "Family",
+                                                  "Finance",
+                                                  "Food & Drink",
+                                                  "Game",
+                                                  "Health & Fitness",
+                                                  "Lifestyle",
+                                                  "Maps & Navigation",
+                                                  "Medical",
+                                                  "News & Magazines",
+                                                  "Parenting",
+                                                  "Personalization",
+                                                  "Photography",
+                                                  "Productivity",
+                                                  "Shopping",
+                                                  "Social",
+                                                  "Sports",
+                                                  "Tools",
+                                                  "Travel & Local",
+                                                  "Video_players",
+                                                  "Weather"
+                                                  ))
+
+```
+
+
+
 ### Creating free_df
 A subset of the data was created, where the dataset was filtered by column 'type' where the type was 'Free'. There were no 'NaN' value for 'type' column.
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
@@ -650,6 +721,40 @@ unique(free_df$price)
 #   filter(type =='NaN')
 
 ```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+free_df$catedfgory <- factor(free_df$category,levels = c( "Art & Design",
+                                                  "Auto & Vehicles",
+                                                  "Books & Reference",
+                                                  "Business",
+                                                  "Communication",
+                                                  "Dating",
+                                                  "Education",
+                                                  "Entertainment",
+                                                  "Family",
+                                                  "Finance",
+                                                  "Food & Drink",
+                                                  "Game",
+                                                  "Health & Fitness",
+                                                  "Lifestyle",
+                                                  "Maps & Navigation",
+                                                  "Medical",
+                                                  "News & Magazines",
+                                                  "Parenting",
+                                                  "Personalization",
+                                                  "Photography",
+                                                  "Productivity",
+                                                  "Shopping",
+                                                  "Social",
+                                                  "Sports",
+                                                  "Tools",
+                                                  "Travel & Local",
+                                                  "Video_players",
+                                                  "Weather"
+                                                  ))
+
+```
+
 ### Merging cleaned datasets
 Due to the fact that  the symbol '$' was removed from the paid subset, it was decided to place the two datasets together so that the changes will remain in the main dataset. 
 
@@ -662,9 +767,40 @@ df <- rbind(paid_df, free_df)
 head(df)
 ```
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+paid_df$catedfgory <- factor(paid_df$category,levels = c( "Art & Design",
+                                                  "Auto & Vehicles",
+                                                  "Books & Reference",
+                                                  "Business",
+                                                  "Communication",
+                                                  "Dating",
+                                                  "Education",
+                                                  "Entertainment",
+                                                  "Family",
+                                                  "Finance",
+                                                  "Food & Drink",
+                                                  "Game",
+                                                  "Health & Fitness",
+                                                  "Lifestyle",
+                                                  "Maps & Navigation",
+                                                  "Medical",
+                                                  "News & Magazines",
+                                                  "Parenting",
+                                                  "Personalization",
+                                                  "Photography",
+                                                  "Productivity",
+                                                  "Shopping",
+                                                  "Social",
+                                                  "Sports",
+                                                  "Tools",
+                                                  "Travel & Local",
+                                                  "Video_players",
+                                                  "Weather"
+                                                  ))
+
+```
+
 # Final Data
-
-
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 str(df)
 ```
@@ -692,72 +828,11 @@ df %>%
                                  "Percentage:", freq)) %>%
   add_bars(showlegend = FALSE, colors = cont_colors ) %>%
   layout(yaxis = list(title = FALSE),
-         xaxis = list(title = "Number of Observations"),
+         xaxis = list(title = "Number of Apps"),
          title= 'What category has the most apps?')
 ```
 
-## Which category has the best rating, and which category has the worst rating?
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-df %>%  
-  select(category, rating) %>% 
-  group_by(category) %>% 
-  summarise(no_apps = n(),
-            min_rating = min(rating), 
-            median_rating = median(rating), 
-            mean_rating = mean(rating),
-            max_rating = max(rating)) %>%
-  mutate(freq = formattable::percent(no_apps / sum(no_apps), 2)) %>% 
-  arrange(desc(no_apps))
-```
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-plot_ly(df, y = ~category, x = ~rating) %>%
-  add_boxplot(color = ~category) %>%
-  layout(yaxis = list(title = "Category"),
-         xaxis = list(title = "Rating"),
-         title = "Rating for Each Category")%>% 
-  hide_legend()
-```
-
-## What are categories are downloaded the most?
-
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-df %>%  
-  select(category, installs_numeric) %>% 
-  group_by(category) %>% 
-  summarise(no_apps = n(),
-            min_installs = min(installs_numeric), 
-            median_installs = median(installs_numeric), 
-            mean_installs = mean(installs_numeric),
-            max_installs = max(installs_numeric),
-            sum_installs = sum(installs_numeric)
-            ) %>%
-  mutate(freq = formattable::percent(no_apps / sum(no_apps), 2)) %>% 
-  arrange(desc(sum_installs))
-```
-
-```{r}
-sum_installs_df <-  df %>%  
-  select(category, installs_numeric) %>% 
-  group_by(category) %>% 
-  summarise(sum_installs = sum(installs_numeric)) %>%
-  arrange(desc(sum_installs))
-
-```
-
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-
-sum_installs_df %>%
-  plot_ly(x = ~sum_installs, 
-          y = ~category, 
-          #color = ~sum_installs,
-          hovertemplate = ~paste("Category:", category, "<br>",
-                        "Sum of Installs:", sum_installs)) %>%
-  add_bars(showlegend=FALSE) %>%
-  layout(yaxis = list(title = FALSE, categoryorder = "total ascending"),
-         xaxis = list(title = "Number of App Downloads"),
-         title='What category is downloaded the most?')
-```
 
 ## What is the percentage of paid and free apps?
 
@@ -780,8 +855,6 @@ fig <- fig %>% add_pie(data = count(df, type), labels = ~type, values = ~n,
                       line = list(color = '#FFFFFF', width = 1)))
 fig
 ```
-
-
 ## What is percentage of paid and free apps in each category?
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 df %>%  
@@ -790,7 +863,6 @@ df %>%
   summarise(no_apps = n()) %>%
   mutate(freq = formattable::percent(no_apps / sum(no_apps), 2)) 
 ```
-
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 summary_type <- df %>%  
@@ -805,7 +877,7 @@ summary_type %>%
           hovertemplate = ~paste("Category:", category, "<br>",
                                 "Type:", type, "<br>", 
                                  "Percentage:", freq, "<br>",
-                                "Number of Observations:", no_apps)) %>%
+                                "Number of Apps:", no_apps)) %>%
   add_bars(showlegend = FALSE, colors = type_colors) %>%
   layout(yaxis = list(title = FALSE),
           xaxis = list(title = "Percentage"),
@@ -815,9 +887,339 @@ summary_type %>%
 
 ```
 
+## Which category has the best rating, and which category has the worst rating?
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+df %>%  
+  select(category, rating) %>% 
+  group_by(category) %>% 
+  summarise(no_apps = n(),
+            min_rating = min(rating), 
+            median_rating = median(rating), 
+            mean_rating = mean(rating),
+            max_rating = max(rating)) %>%
+  mutate(freq = formattable::percent(no_apps / sum(no_apps), 2))
+```
 
-## Does size of the app affect rating?
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+paid_box <- plot_ly(paid_df, y = ~category, x = ~rating) %>%
+  add_boxplot(color = ~category) %>%
+  layout(yaxis = list(title = FALSE),
+         xaxis = list(title = FALSE))%>% 
+  hide_legend()
 
+
+free_box <- plot_ly(free_df, y = ~category, x = ~rating) %>%
+  add_boxplot(color = ~category) %>%
+  layout(yaxis = list(title = FALSE),
+         xaxis = list(title = FALSE))%>% 
+  hide_legend()
+
+annotations = list( 
+  list( 
+    x = 0.2,  
+    y = 1.0,  
+    text = "Paid Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ),  
+  list( 
+    x = 0.8,  
+    y = 1,  
+    text = "Free Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ))
+
+
+fig <- subplot(paid_box, free_box, shareY= TRUE) %>% 
+  layout(title = 'What categories have the most downloads?', annotations = annotations)
+fig
+
+```
+
+## What are categories are downloaded the most?
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+df %>%  
+  select(category, installs_numeric) %>% 
+  group_by(category) %>% 
+  summarise(no_apps = n(),
+            min_installs = min(installs_numeric), 
+            median_installs = median(installs_numeric), 
+            mean_installs = mean(installs_numeric),
+            max_installs = max(installs_numeric),
+            sum_installs = sum(installs_numeric)
+            ) %>%
+  mutate(freq = formattable::percent(no_apps / sum(no_apps), 2)) %>% 
+  arrange(desc(sum_installs))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+sum_installs_df <-  df %>%  
+  select(category, installs_numeric) %>% 
+  group_by(category) %>% 
+  summarise(sum_installs = sum(installs_numeric)) %>%
+  arrange(desc(sum_installs))
+
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+
+sum_installs_df %>%
+  plot_ly(x = ~sum_installs, 
+          y = ~category, 
+          #color = ~sum_installs,
+          hovertemplate = ~paste("Category:", category, "<br>",
+                        "Sum of Installs:", sum_installs)) %>%
+  add_bars(showlegend=FALSE) %>%
+  layout(yaxis = list(title = FALSE, categoryorder = "total ascending"),
+         xaxis = list(title = "Number of App Downloads"),
+         title='What category is downloaded the most?')
+```
+
+
+
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+paid_content_df <-  paid_df %>%
+  select(category,installs_numeric) %>%
+  group_by(category) %>%
+  summarise(paid_sum_installs = sum(installs_numeric))
+
+free_content_df <-  free_df %>%
+  select(category, installs_numeric) %>%
+  group_by(category) %>%
+  summarise(free_sum_installs = sum(installs_numeric)) 
+
+
+content_df <- merge(paid_content_df, free_content_df)
+
+content_df$category <- factor(content_df$category,
+                                      levels = c( "Art & Design",
+                                                  "Auto & Vehicles",
+                                                  "Books & Reference",
+                                                  "Business",
+                                                  "Communication",
+                                                  "Dating",
+                                                  "Education",
+                                                  "Entertainment",
+                                                  "Family",
+                                                  "Finance",
+                                                  "Food & Drink",
+                                                  "Game",
+                                                  "Health & Fitness",
+                                                  "Lifestyle",
+                                                  "Maps & Navigation",
+                                                  "Medical",
+                                                  "News & Magazines",
+                                                  "Parenting",
+                                                  "Personalization",
+                                                  "Photography",
+                                                  "Productivity",
+                                                  "Shopping",
+                                                  "Social",
+                                                  "Sports",
+                                                  "Tools",
+                                                  "Travel & Local",
+                                                  "Video_players",
+                                                  "Weather"
+                                                  ))
+
+
+
+paid_graph <- content_df %>%
+  plot_ly(y = ~category, x = ~paid_sum_installs,  type = 'bar', name = 'Paid',   
+          marker = list(color = factor(content_df$category,labels=c('#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 28, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#D62728', '#7F7F7F',# 18, 
+                                                    '#7F7F7F',  '#D62728', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 13, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 8, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 5
+                                                    '#7F7F7F','#7F7F7F', '#7F7F7F'))),  
+          hovertemplate = ~paste("Category:", category, "<br>",
+                                 "Type: Paid", "<br>",
+                                 "Number of Downloads:", paid_sum_installs)) %>%
+
+  layout(yaxis = list(title = FALSE),
+         xaxis = list(title = FALSE),
+         showlegend = FALSE)
+
+free_graph <- content_df %>% 
+  plot_ly(y = ~category, x = ~free_sum_installs, type = 'bar', name = 'Free',
+          marker = list(color = factor(content_df$category,labels=c('#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#D62728',# 28, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#D62728', '#7F7F7F',# 23, 
+                                                    '#7F7F7F',  '#D62728', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 18, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 13, 
+                                                    '#D62728',  '#7F7F7F', '#D62728', '#7F7F7F', '#D62728',# 8
+                                                    '#7F7F7F','#7F7F7F', '#7F7F7F'))), # D62728
+ 
+          hovertemplate = ~paste("Category:", category, "<br>",
+                                 "Type: Free", "<br>",
+                                 "Number of Downloads:", free_sum_installs)) %>%
+           
+  layout(yaxis = list(title = FALSE),
+         xaxis = list(title = FALSE),
+        showlegend = FALSE)
+annotations = list( 
+  list( 
+    x = 0.2,  
+    y = 1.0,  
+    text = "Paid Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ),  
+  list( 
+    x = 0.8,  
+    y = 1,  
+    text = "Free Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ))
+
+
+fig <- subplot(paid_graph, free_graph, shareY= TRUE) %>% 
+  layout(title = 'What categories have the most downloads?', annotations = annotations)
+fig
+```
+
+
+
+
+
+
+
+## Does size of the price affect rating?
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+d <- plot_ly(paid_df, x = ~rating, y = ~price, 
+             mode = "markers", color = ~category #, size = counts, opacity = counts
+             ) 
+d
+```
+
+## Is there a higher percentage of paid apps in some categories than free apps? 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+paid_content_df <-  paid_df %>%
+  select(category) %>%
+  group_by(category) %>%
+  summarise(paid_no_apps = n()) %>%
+  mutate(paid_freq = round(paid_no_apps / sum(paid_no_apps), 2))
+  # arrange(desc(paid_no_apps))
+
+free_content_df <-  free_df %>%
+  select(category) %>%
+  group_by(category) %>%
+  summarise(free_no_apps = n()) %>%
+  mutate(free_freq = round(free_no_apps / sum(free_no_apps), 2)) 
+#   arrange(desc(free_no_apps))
+
+content_df <- merge(paid_content_df, free_content_df)
+
+content_df$category <- factor(content_df$category,
+                                      levels = c( "Art & Design",
+                                                  "Auto & Vehicles",
+                                                  "Books & Reference",
+                                                  "Business",
+                                                  "Communication",
+                                                  "Dating",
+                                                  "Education",
+                                                  "Entertainment",
+                                                  "Family",
+                                                  "Finance",
+                                                  "Food & Drink",
+                                                  "Game",
+                                                  "Health & Fitness",
+                                                  "Lifestyle",
+                                                  "Maps & Navigation",
+                                                  "Medical",
+                                                  "News & Magazines",
+                                                  "Parenting",
+                                                  "Personalization",
+                                                  "Photography",
+                                                  "Productivity",
+                                                  "Shopping",
+                                                  "Social",
+                                                  "Sports",
+                                                  "Tools",
+                                                  "Travel & Local",
+                                                  "Video_players",
+                                                  "Weather"
+                                                  ))
+
+
+
+paid_graph <- content_df %>%
+  plot_ly(y = ~category, x = ~paid_freq*100,  type = 'bar',   
+          marker = list(color = factor(content_df$category,labels=c('#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 28, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#D62728', '#7F7F7F',# 18, 
+                                                    '#7F7F7F',  '#D62728', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 13, 
+                                                    '#D62728',  '#7F7F7F', '#7F7F7F', '#D62728', '#7F7F7F',# 8, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#D62728',# 5
+                                                    '#7F7F7F','#7F7F7F', '#7F7F7F'))),  
+          hovertemplate = ~paste("Category:", category, "<br>",
+                                 "Type: Paid", "<br>",
+                                 "Number of Category:", paid_no_apps, "<br>",
+                                 "Percentage:", formattable::percent(paid_freq))) %>%
+
+  layout(yaxis = list(title = FALSE),
+         xaxis = list(title = FALSE, ticksuffix = "%",  range = c(0, 25)),
+         showlegend = FALSE)
+
+free_graph <- content_df %>% 
+  plot_ly(y = ~category, x = ~free_freq*100, type = 'bar',
+          marker = list(color = factor(content_df$category,labels=c('#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 28, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#D62728', '#7F7F7F',# 23, 
+                                                    '#7F7F7F',  '#D62728', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 18, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F',# 13, 
+                                                    '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#D62728',# 8
+                                                    '#7F7F7F','#7F7F7F', '#7F7F7F'))), # D62728
+ 
+          hovertemplate = ~paste("Category:", category, "<br>",
+                                 "Type: Free", "<br>",
+                                 "Number of Category:", free_no_apps, "<br>", 
+                                 "Percentage:", formattable::percent(free_freq))) %>%
+           
+  layout(yaxis = list(title = FALSE),
+         xaxis = list(title = FALSE, ticksuffix = "%",  range = c(0, 20)),
+        showlegend = FALSE)
+annotations = list( 
+  list( 
+    x = 0.2,  
+    y = 1.0,  
+    text = "Paid Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ),  
+  list( 
+    x = 0.8,  
+    y = 1,  
+    text = "Free Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ))
+
+
+fig <- subplot(paid_graph, free_graph, shareY= TRUE) %>% 
+  layout(title = 'What categories have more apps?', annotations = annotations)
+fig
+```
 
 ## What content type is more common in the market?
 
@@ -830,11 +1232,6 @@ df %>%
   arrange(desc(no_apps))
 ```
 
-
-
-```{r}
-content_colors = c( '#72B7B2', '#EECA3B', '#54A24B', '#7F7F7F')
-```
  
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 df %>%
@@ -846,7 +1243,7 @@ df %>%
                                  "Percentage:", freq)) %>%
   add_bars(showlegend = FALSE, colors = content_colors) %>%
   layout(xaxis = list(title = FALSE),
-          yaxis = list(title = "Number of Observations"),
+          yaxis = list(title = "Number of Apps"),
          title= 'What Content Rating is the most common?')
 ```
 
@@ -861,6 +1258,39 @@ fig <- fig %>% add_pie(data = count(df,content.rating), labels = ~content.rating
                   colors = c( '#54A24B' ,  '#72B7B2','#7F7F7F',   '#EECA3B'),
                       line = list(color = '#FFFFFF', width = 1)))
 fig
+```
+
+## Which content rating has more paid apps? 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+content_df <- df %>%
+  select(content.rating, type) %>%
+  group_by(type, content.rating) %>%
+  summarise(no_apps = n()) %>%
+  mutate(freq =round(no_apps / sum(no_apps), 2)) %>%
+  arrange(desc(no_apps))
+
+
+content_df$content.rating <- factor(content_df$content.rating, 
+                                      levels = c( "Everyone 10+",
+                                                  "Adults only 18+",
+                                                  "Teen","Everyone"
+                                                  ))
+
+content_df
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+content_df %>% 
+plot_ly(y = ~content.rating, x = ~freq*100, color = ~type,
+        hovertemplate = ~paste("content.rating:", content.rating, "<br>", 
+                               "Type:", type, "<br>",
+                               "Number of content.rating:", no_apps, "<br>", 
+                               "Percentage:", formattable::percent(freq))) %>%
+add_bars(showlegend = FALSE, colors = type_colors ) %>%
+layout(yaxis = list(title = FALSE),
+       xaxis = list(title = "Percentage of Apps",     
+        ticksuffix = "%",  range = c(0, 100)),
+       title= 'What content.rating has the most apps?')
 ```
 
 ## Which apps have higher rating: free apps or paid apps?
@@ -997,6 +1427,62 @@ summary_category_type_rating_df %>%
          showlegend= FALSE)
 ```
 
+
+### Subplots
+creating subplots in R to be displayed correctly is very difficult.  An attempt was made to make subplots out of bar chart and pie chart for content rating so that the user can easily see the difference, especially in RMD file without scrolling too much, however, the attempt did not go as planned and it was decided to abandon the plot. 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+content_bar <- df %>%
+  count(content.rating) %>%
+  mutate(content.rating = fct_reorder(content.rating, n, .desc = TRUE), freq = formattable::percent(n / sum(n), 2)) %>%
+  plot_ly(x = ~content.rating, y = ~n, color = ~content.rating,
+          hovertemplate = ~paste("Content Type:", content.rating, "<br>", 
+                                 "Number of Content Type:", n, "<br>", 
+                                 "Percentage:", freq)) %>%
+  add_bars(showlegend = FALSE, colors = content_colors) %>%
+  layout(xaxis = list(title = FALSE),
+          yaxis = list(title = "Number of Apps"),
+         title= 'What Content Rating is the most common?')
+
+content_pie <- plot_ly()
+content_pie <- content_pie %>% add_pie(data = count(df,content.rating), labels = ~content.rating, values = ~n, 
+               textinfo='label+percent',
+               insidetextorientation='horizontal',
+               title = 'What Content Rating is the most common?', 
+                marker = list(
+                  colors = c( '#54A24B' ,  '#72B7B2','#7F7F7F',   '#EECA3B'),
+                      line = list(color = '#FFFFFF', width = 1)))
+
+annotations = list( 
+  list( 
+    x = 0.2,  
+    y = 1.0,  
+    text = "Paid Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ),  
+  list( 
+    x = 0.8,  
+    y = 1,  
+    text = "Free Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ))
+
+fig <- subplot(content_bar, content_pie, nrows = 2) %>% 
+  layout(title = 'What categories have more apps?', annotations = annotations)
+fig
+
+
+```
+
+
+
 # Conclusion
 
 # References
@@ -1027,7 +1513,7 @@ summary_cont_type %>%
           hovertemplate = ~paste("content.rating:", content.rating, "<br>",
                                 "Type:", type, "<br>", 
                                  "Percentage:", freq, "<br>",
-                                "Number of Observations:", no_apps)) %>%
+                                "Number of Apps:", no_apps)) %>%
   add_bars(showlegend = FALSE, colors = type_colors) %>%
   layout(yaxis = list(title = FALSE),
           xaxis = list(title = "Percentage"),
@@ -1037,10 +1523,16 @@ summary_cont_type %>%
 
 ```
 
-
-
-
-### What is the price distribution?
+## Boxplot of ratings
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+plot_ly(df, y = ~category, x = ~rating) %>%
+  add_boxplot(color = ~category) %>%
+  layout(yaxis = list(title = "Category"),
+         xaxis = list(title = "Rating"),
+         title = "Rating for Each Category")%>% 
+  hide_legend()
+```
+## What is the price distribution?
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -1096,27 +1588,36 @@ paid_df %>%
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 paid_graph <- paid_df %>%
-  count(category) %>%
+  count(category, type) %>%
   mutate(category = fct_reorder(category, n, .desc = FALSE), freq = formattable::percent(n / sum(n), 2)) %>%
   plot_ly(y = ~category, x = ~n, color = ~category,
           hovertemplate = ~paste("Category:", category, "<br>", 
+                                 "Type:", type, "<br>",
                                  "Number of Category:", n, "<br>", 
                                  "Percentage:", freq)) %>%
-  add_bars(showlegend = FALSE, colors = cont_colors ) %>%
+  add_bars(showlegend = FALSE, colors = c( '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F',
+                                           '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', 
+                                            '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', 
+                                            '#D62728', '#7F7F7F','#7F7F7F' ) ) %>%
   layout(yaxis = list(title = FALSE),
-         xaxis = list(title = "Number of Observations"),
+         xaxis = list(title = "Number of Apps"),
          title= 'What category has the most apps?')
 
 free_graph <- free_df %>%
-  count(category) %>%
+  count(category, type) %>%
   mutate(category = fct_reorder(category, n, .desc = FALSE), freq = formattable::percent(n / sum(n), 2)) %>%
   plot_ly(y = ~category, x = ~n, color = ~category,
-          hovertemplate = ~paste("Category:", category, "<br>", 
+          hovertemplate = ~paste("Category:", category, "<br>",
+                                 "Type:", type, "<br>",
                                  "Number of Category:", n, "<br>", 
                                  "Percentage:", freq)) %>%
-  add_bars(showlegend = FALSE, colors = c(  'lightgreen', 'darkgreen') ) %>%
+  add_bars(showlegend = FALSE, colors = c(  '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', 
+                                            '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', 
+                                            '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', 
+                                            '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', '#7F7F7F', 
+                                            '#7F7F7F','#D62728', '#7F7F7F' ) ) %>%
   layout(yaxis = list(title = FALSE),
-         xaxis = list(title = "Number of Observations"),
+         xaxis = list(title = "Number of Apps"),
          title= 'What category has the most apps?')
 annotations = list( 
   list( 
@@ -1145,4 +1646,93 @@ fig <- subplot(paid_graph, free_graph) %>%
   layout(title = 'What categories have more apps?', annotations = annotations)
 fig
 ```
+
+
+
+
+
+
+## Pyramid Graph - Content Rating
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+paid_content_df <-  paid_df %>%
+  select(content.rating) %>%
+  group_by(content.rating) %>%
+  summarise(paid_no_apps = n()) %>%
+  mutate(paid_freq = formattable::percent(paid_no_apps / sum(paid_no_apps), 2))
+  # arrange(desc(paid_no_apps))
+
+free_content_df <-  free_df %>%
+  select(content.rating) %>%
+  group_by(content.rating) %>%
+  summarise(free_no_apps = n()) %>%
+  mutate(free_freq = formattable::percent(free_no_apps / sum(free_no_apps), 2))
+#   arrange(desc(free_no_apps))
+
+content_df <- merge(paid_content_df, free_content_df)
+
+
+content_df$content.rating <- factor(content_df$content.rating, 
+                                      levels = c( "Everyone 10+",
+                                                  "Adults only 18+",
+                                                  "Teen","Everyone"
+                                                  ))
+
+content_df
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+
+
+
+paid_graph <- content_df %>%
+  plot_ly(y = ~content.rating, x = ~paid_freq, color = ~content.rating,
+          hovertemplate = ~paste("content.rating:", content.rating, "<br>", 
+                                 "Type: Paid", "<br>",
+                                 "Number of content.rating:", paid_no_apps, "<br>", 
+                                 "Percentage:", paid_freq)) %>%
+  add_bars(showlegend = FALSE, colors = c(  '#7F7F7F',  '#7F7F7F', '#7F7F7F', '#7F7F7F' ) ) %>%
+  layout(yaxis = list(title = FALSE),
+         xaxis = list(title = "Number of Apps"),
+         title= 'What content.rating has the most apps?')
+
+free_graph <-  content_df %>%
+  plot_ly(y = ~content.rating, x = ~free_freq, color = ~content.rating,
+          hovertemplate = ~paste("content.rating:", content.rating, "<br>",
+                                 "Type: Free", "<br>",
+                                 "Number of content.rating:", free_no_apps, "<br>", 
+                                 "Percentage:", free_freq)) %>%
+  add_bars(showlegend = FALSE, colors = c(   '#7F7F7F', '#7F7F7F','#7F7F7F', '#7F7F7F' ) ) %>%
+  layout(yaxis = list(title = FALSE),
+         xaxis = list(title = "Number of Apps"),
+         title= 'What category has the most apps?')
+annotations = list( 
+  list( 
+    x = 0.2,  
+    y = 1.0,  
+    text = "Paid Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ),  
+  list( 
+    x = 0.8,  
+    y = 1,  
+    text = "Free Apps",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ))
+
+
+fig <- subplot(paid_graph, free_graph) %>% 
+  layout(title = 'What categories have more apps?', annotations = annotations)
+fig
+
+```
+
+
 
